@@ -11,9 +11,9 @@ osmium getid -r -i passenge_rail_route_ids.txt belgium.osm.pbf -o all_passenger_
 # only passenger rails
 echo "[O] extracting passenger rails"
 osmium tags-filter all_passenger_rail_objects.osm.pbf w/railway=rail -o passenger_railways.osm.pbf --overwrite
-osmium export passenger_railways.osm.pbf -o passenger_railways.geojson --overwrite
+osmium export passenger_railways.osm.pbf -o passenger_railways.geojson --geometry-types=linestring --overwrite
 
 # only passenger stops
 echo "[O] extracting passenger stops"
 osmium tags-filter all_passenger_rail_objects.osm.pbf n/railway=stop -o passenger_stops.osm.pbf --overwrite
-osmium export passenger_stops.osm.pbf -o passenger_stops.geojson --overwrite
+osmium export passenger_stops.osm.pbf -o passenger_stops.geojson --geometry-types=point --overwrite
