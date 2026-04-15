@@ -1,12 +1,12 @@
 cd data
 
 echo "[O] Getting all rail route id's"
-osmium tags-filter belgium-full.osm.pbf r/route=train -f opl | grep "^r" | cut -d' ' -f1 > passenge_rail_route_ids.txt
+osmium tags-filter belgium.osm.pbf r/route=train -f opl | grep "^r" | cut -d' ' -f1 > passenge_rail_route_ids.txt
 
 # get all route relations (from the id's) and get ALL their children or references
 # this includes all the nodes on the rails
 echo "[O] Getting all objects on the rail routes"
-osmium getid -r -i passenge_rail_route_ids.txt belgium-full.osm.pbf -o all_passenger_rail_objects.osm.pbf --overwrite
+osmium getid -r -i passenge_rail_route_ids.txt belgium.osm.pbf -o all_passenger_rail_objects.osm.pbf --overwrite
 
 # only passenger rails
 echo "[O] extracting passenger rails"
