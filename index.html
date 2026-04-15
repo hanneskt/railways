@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belgian Rails</title>
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        const map = new maplibregl.Map({
+            container: 'map',
+            style: 'https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json',
+            center: [4.4699, 50.5039],
+            zoom: 7.5
+        });
+
+        map.on('load', () => {
+
+
+            map.addSource('rails', {
+                'type': 'geojson',
+                'data': 'data/passenger_railways.geojson'
+            });
+            map.addSource('stops', {
+                'type': 'geojson',
+                'data': 'data/passenger_stops.geojson'
+            });
+
+
+            map.addLayer({
+                'id': 'rail-lines',
+                'type': 'line',
+                'source': 'rails',
+                'filter': ['==', '$type', 'LineString'],
+                'layout': {
+                    'line-join': 'round',
+                    'line-cap': 'round'
+                },
+                'paint': {
+                    'line-color': '#ff5e00',
+                    'line-width': 2,
+                    'line-opacity': 0.8
+                }
+            });
+
+
+            map.addLayer({
+                'id': 'stop-circles',
+                'type': 'circle',
+                'source': 'stops',
+                'filter': ['==', '$type', 'Point'],
+                'paint': {
+                    'circle-color': '#ffffff',
+                    'circle-radius': 3,
+                    'circle-stroke-width': 1,
+                    'circle-stroke-color': '#ff5e00'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
